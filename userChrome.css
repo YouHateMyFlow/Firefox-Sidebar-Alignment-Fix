@@ -83,3 +83,12 @@ body:has(> #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
                           > #browser > :is(#sidebar-launcher-splitter, #sidebar-splitter, #ai-window-splitter):hover {
                             background-color: var(--focus-outline-color);
                           }
+
+                          :root:not([inFullscreen], [inDOMFullscreen], [customizing])
+                          body:has(> #navigator-toolbox[tabs-hidden]):has(
+                            > #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
+                                                                          > #browser > #sidebar-box:not([hidden]))
+                          > #navigator-toolbox > #PersonalToolbar {
+                            background-color: var(--toolbox-background-color) !important;
+                            color: var(--toolbox-text-color) !important;
+                          }
