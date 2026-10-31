@@ -1,94 +1,131 @@
-:root:not([inFullscreen], [inDOMFullscreen], [customizing])
-body:has(> #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
-         > #browser > #sidebar-box:not([hidden])) {
-  display: grid !important;
-  grid-template-columns: auto auto auto auto minmax(0, 1fr) auto auto;
-  grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
-  grid-template-areas:
-  "menubar menubar menubar menubar menubar menubar menubar"
-  "tabbar  tabbar  tabbar  tabbar  tabbar  tabbar  tabbar"
-  "navbar  navbar  navbar  navbar  navbar  navbar  navbar"
-  "sidebar lsplit  bmbar   bmbar   bmbar   bmbar   bmbar"
-  "sidebar lsplit  notif   notif   notif   notif   notif"
-  "sidebar lsplit  panel   psplit  content aisplit aibox";
-         }
+@media not -moz-pref("sidebar.visibility", "expand-on-hover") {
 
-         :root:not([inFullscreen], [inDOMFullscreen], [customizing])
-         body:has(> #browser > :is(#sidebar-container, #sidebar-main, #sidebar-box)[sidebar-positionend]:not([hidden])) {
-           grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto;
-           grid-template-areas:
-           "menubar menubar menubar menubar menubar menubar menubar"
-           "tabbar  tabbar  tabbar  tabbar  tabbar  tabbar  tabbar"
-           "navbar  navbar  navbar  navbar  navbar  navbar  navbar"
-           "bmbar   bmbar   bmbar   bmbar   bmbar   lsplit  sidebar"
-           "notif   notif   notif   notif   notif   lsplit  sidebar"
-           "aibox   aisplit content psplit  panel   lsplit  sidebar";
-         }
+  :root:not([customizing]):not([mini-window]):not([fullscreenNavToolboxHidden]) body {
+    display: grid !important;
+    grid-template-columns: auto auto auto auto minmax(0, 1fr) auto auto;
+    grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
+  }
 
-         :root:not([inFullscreen], [inDOMFullscreen], [customizing])
-         body:has(> #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
-                  > #browser > #sidebar-box:not([hidden]))
-         > :is(#navigator-toolbox, #browser) {
-           display: contents !important;
-         }
+  :root:not([customizing]):not([mini-window]):not([fullscreenNavToolboxHidden]) body:has(#sidebar-box[sidebar-positionend]) {
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto;
+  }
 
-         #ai-window-splitter[collapsed],
-         #ai-window-box[collapsed] {
-         display: none !important;
-         }
+  :root:not([customizing]):not([mini-window]):not([fullscreenNavToolboxHidden]) #navigator-toolbox {
+    display: grid !important;
+    grid-area: 1 / 1 / 6 / 8;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+  }
 
-         #toolbar-menubar       { grid-area: menubar; }
-         #TabsToolbar           { grid-area: tabbar;  }
-         #nav-bar               { grid-area: navbar;  }
-         #PersonalToolbar       { grid-area: bmbar;   }
-         #notifications-toolbar { grid-area: notif;   }
-         :is(#sidebar-container, #sidebar-main) { grid-area: sidebar; }
-         #sidebar-launcher-splitter { grid-area: lsplit;  }
-         #sidebar-box               { grid-area: panel;   }
-         #sidebar-splitter          { grid-area: psplit;  }
-         #tabbrowser-tabbox         { grid-area: content; }
-         #ai-window-splitter        { grid-area: aisplit; }
-         #ai-window-box             { grid-area: aibox;   }
+  :root:not([customizing]):not([mini-window]):not([fullscreenNavToolboxHidden]) #browser {
+    display: contents !important;
+  }
 
-         #a11y-announcement {
-         grid-row: 7;
-         max-height: 0;
-         overflow: clip;
-         }
+  #toolbar-menubar {
+    grid-area: 1 / 1 / 2 / 8;
+  }
 
-         :root[theme-image-in-toolbox]:not([inFullscreen], [inDOMFullscreen], [customizing])
-         body:has(> #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
-                  > #browser > #sidebar-box:not([hidden]))
-         > #navigator-toolbox > toolbar {
-           background-image: var(--toolbox-background-image) !important;
-           background-repeat: var(--toolbox-background-repeat) !important;
-           background-position: var(--toolbox-background-position) !important;
-           background-size: var(--toolbox-background-size) !important;
-           background-attachment: fixed !important;
-         }
+  #TabsToolbar {
+    grid-area: 2 / 1 / 3 / 8;
+  }
 
-         :root:not([inFullscreen], [inDOMFullscreen], [customizing])
-         body:has(> #navigator-toolbox:not([tabs-hidden])):has(
-           > #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
-                                                               > #browser > #sidebar-box:not([hidden]))
-         > #browser > :is(#sidebar-container, #sidebar-main, #sidebar-launcher-splitter,
-                          #sidebar-box, #sidebar-splitter, #ai-window-splitter, #ai-window-box) {
-                          background-color: var(--toolbar-background-color);
-                          }
+  #nav-bar {
+    grid-area: 3 / 1 / 4 / 8;
+  }
 
-                          :root:not([inFullscreen], [inDOMFullscreen], [customizing])
-                          body:has(> #navigator-toolbox:not([tabs-hidden])):has(
-                            > #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
-                                                                                > #browser > #sidebar-box:not([hidden]))
-                          > #browser > :is(#sidebar-launcher-splitter, #sidebar-splitter, #ai-window-splitter):hover {
-                            background-color: var(--focus-outline-color);
-                          }
+  #PersonalToolbar {
+    grid-area: 4 / 5 / 5 / 6;
+  }
 
-                          :root:not([inFullscreen], [inDOMFullscreen], [customizing])
-                          body:has(> #navigator-toolbox[tabs-hidden]):has(
-                            > #browser > :is(#sidebar-container, #sidebar-main):not([hidden]),
-                                                                          > #browser > #sidebar-box:not([hidden]))
-                          > #navigator-toolbox > #PersonalToolbar {
-                            background-color: var(--toolbox-background-color) !important;
-                            color: var(--toolbox-text-color) !important;
-                          }
+  #notifications-toolbar {
+    grid-area: 5 / 5 / 6 / 6;
+  }
+
+  #sidebar-container {
+    grid-area: 4 / 1 / 7 / 2;
+  }
+
+  #sidebar-launcher-splitter {
+    grid-area: 4 / 2 / 7 / 3;
+  }
+
+  #sidebar-box {
+    grid-area: 4 / 3 / 7 / 4;
+  }
+
+  #sidebar-splitter {
+    grid-area: 4 / 4 / 7 / 5;
+  }
+
+  #tabbrowser-tabbox {
+    grid-area: 6 / 5 / 7 / 6;
+  }
+
+  #ai-window-splitter {
+    grid-area: 4 / 6 / 7 / 7;
+  }
+
+  #ai-window-box {
+    grid-area: 4 / 7 / 7 / 8;
+  }
+
+  #ai-window-box[collapsed] {
+    display: none !important;
+  }
+
+  #mainPopupSet {
+    grid-area: 1 / 1 / 2 / 8;
+  }
+
+  #a11y-announcement {
+    grid-area: 6 / 1 / 7 / 8;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #PersonalToolbar {
+    grid-area: 4 / 3 / 5 / 4;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #notifications-toolbar {
+    grid-area: 5 / 3 / 6 / 4;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #sidebar-container {
+    grid-area: 4 / 7 / 7 / 8;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #sidebar-launcher-splitter {
+    grid-area: 4 / 6 / 7 / 7;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #sidebar-box {
+    grid-area: 4 / 5 / 7 / 6;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #sidebar-splitter {
+    grid-area: 4 / 4 / 7 / 5;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #tabbrowser-tabbox {
+    grid-area: 6 / 3 / 7 / 4;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #ai-window-splitter {
+    grid-area: 4 / 2 / 7 / 3;
+  }
+
+  :root:has(#sidebar-box[sidebar-positionend]) #ai-window-box {
+    grid-area: 4 / 1 / 7 / 2;
+  }
+
+}
+
+@media not -moz-pref("browser.nova.enabled") {
+
+  #sidebar-container,
+  #sidebar-box,
+  #sidebar-launcher-splitter,
+  #sidebar-splitter {
+    background-color: var(--toolbar-background-color);
+  }
+
+}
